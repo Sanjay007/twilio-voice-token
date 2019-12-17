@@ -7,11 +7,11 @@ const app = express();
 app.get('/token', (req, res) => {
   // put your Twilio API credentials here
   
-  const accountSid = 'SK8131066812d0822b0ac088184fa571af';
-  const authToken = 'lUSW5oXsLRRaWpnqm0ALdPqkSUa9Qlr0';
+  const accountSid = 'AC07d7e7571e6969bc8680d5c2022b443c';
+  const authToken = '235cf75cbdf32b7abd8933a4abf26934';
 
   // put your Twilio Application Sid here
-  const appSid = 'AC07d7e7571e6969bc8680d5c2022b443c';
+  const appSid = 'AC7f1c1d93ab2d7588f81d48fb87d287f6';
 
   const capability = new ClientCapability({
     accountSid: accountSid,
