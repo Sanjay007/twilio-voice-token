@@ -1,34 +1,62 @@
-const http = require('http');
-const express = require('express');
-const ClientCapability = require('twilio').jwt.ClientCapability;
+require('dotenv').load();
 
+const http = require('http');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser')
+const methods = require('./src/server.js');
+const tokenGenerator = methods.tokenGenerator;
+const makeCall = methods.makeCall;
+const placeCall = methods.placeCall;
+const incoming = methods.incoming;
+const welcome = methods.welcome;
+var twilio = require('twilio');
+
+// Create Express webapp
 const app = express();
 
-app.get('/token', (req, res) => {
-  // put your Twilio API credentials here
-  const accountSid = 'AC07d7e7571e6969bc8680d5c2022b443c';
-  const authToken = 'lUSW5oXsLRRaWpnqm0ALdPqkSUa9Qlr0';
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
 
-  // put your Twilio Application Sid here
-  const appSid = 'SK8131066812d0822b0ac088184fa571af';
-
-  const capability = new ClientCapability({
-    accountSid: accountSid,
-    authToken: authToken,
-  });
-  capability.addScope(
-    new ClientCapability.OutgoingClientScope({ applicationSid: appSid })
-  );
-  capability.addScope(new ClientCapability.IncomingClientScope('joey'));
-  const token = capability.toJwt();
-
-  res.set('Content-Type', 'application/jwt');
-  res.send(token);
+app.get('/', function(request, response) {
+  response.send(welcome());
 });
 
-app.post('/voice', (req, res) => {
-  // TODO: Create TwiML response
+app.post('/', function(request, response) {
+  response.send(welcome());
 });
 
-http.createServer(app).listen(1337, '127.0.0.1');
-console.log('Twilio Client app server running at http://127.0.0.1:1337/token/');
+app.get('/accessToken', function(request, response) {
+  tokenGenerator(request, response);
+});
+
+app.post('/accessToken', function(request, response) {
+  tokenGenerator(request, response);
+});
+
+app.get('/makeCall', function(request, response) {
+  makeCall(request, response);
+});
+
+app.post('/makeCall', function(request, response) {
+  makeCall(request, response);
+});
+
+app.get('/placeCall', placeCall);
+
+app.post('/placeCall', placeCall);
+
+app.get('/incoming', function(request, response) {
+  response.send(incoming());
+});
+
+app.post('/incoming', function(request, response) {
+  response.send(incoming());
+});
+
+// Create an http server and run it
+const server = http.createServer(app);
+const port = process.env.PORT || 3000;
+server.listen(port, function() {
+  console.log('Express server running on *:' + port);
+});
