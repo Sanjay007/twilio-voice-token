@@ -1,0 +1,24 @@
+{
+  "name": "twilio-voice-token",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sanjay007/twilio-voice-token.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sanjay007/twilio-voice-token/issues"
+  },
+  "homepage": "https://github.com/Sanjay007/twilio-voice-token#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "http": "0.0.0",
+    "twilio": "^3.39.0"
+  }
+}
